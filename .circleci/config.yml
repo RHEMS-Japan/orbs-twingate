@@ -3,7 +3,7 @@ setup: true
 orbs:
   orb-tools: circleci/orb-tools@12.0
   shellcheck: circleci/shellcheck@3.1
-  twingate: rhems-japan/twingate@dev:<<pipeline.git.revision>>
+  # twingate: rhems-japan/twingate@dev:<<pipeline.git.revision>>
 
 executors:
   default:
@@ -15,7 +15,7 @@ jobs:
     executor: default
     steps:
       - checkout
-      - twingate/install
+      # - twingate/install
 
 workflows:
   prod-pack:
@@ -49,8 +49,8 @@ workflows:
       - orb-tools/review
       - shellcheck/check
       - orb-tools/publish:
-          orb-name: rhems-japan/twingate
-          vcs-type: << pipeline.project.type >>
+          orb_name: rhems-japan/twingate
+          vcs_type: << pipeline.project.type >>
           requires:
             - orb-tools/lint
             - orb-tools/pack
