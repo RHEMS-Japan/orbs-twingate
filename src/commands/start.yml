@@ -1,7 +1,8 @@
+---
 description: >
   Twingate Start
 parameters:
-  service-key:
+  service_key:
     type: env_var_name
     default: TWINGATE_SERVICE_KEY
     description: >
@@ -12,5 +13,5 @@ steps:
   - run:
       name: Twingate Start
       environment:
-        KEY_ENV: <<parameters.service-key>>
+        KEY_ENV: <<parameters.service_key>>
       command: <<include(scripts/start.sh)>>
