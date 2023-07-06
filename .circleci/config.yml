@@ -1,0 +1,62 @@
+version: 2.1
+setup: true
+orbs:
+  orb-tools: circleci/orb-tools@12.0
+  shellcheck: circleci/shellcheck@3.1
+  twingate: rhems-japan/twingate@dev:<<pipeline.git.revision>>
+
+executors:
+  default:
+    machine:
+      image: ubuntu-2004:2023.04.2
+
+jobs:
+  integration-test:
+    executor: default
+    steps:
+      - checkout
+      - twingate/install
+
+workflows:
+  prod-pack:
+    when:
+      and:
+        - << pipeline.git.tag >>
+        - equal: [<< pipeline.git.branch >>, "main"]
+    jobs:
+      - orb-tools/lint
+      - orb-tools/pack
+      - orb-tools/review
+      - shellcheck/check
+      - orb-tools/continue:
+          context: orb-publishing
+          pipeline_number: << pipeline.number >>
+          vcs_type: << pipeline.project.type >>
+          orb_name: rhems-japan/twingate
+          requires:
+            - orb-tools/lint
+            - orb-tools/pack
+            - orb-tools/review
+            - shellcheck/check
+
+  dev-pack:
+    when:
+      and:
+        - equal: [<< pipeline.git.branch >>, "dev"]
+    jobs:
+      - orb-tools/lint
+      - orb-tools/pack
+      - orb-tools/review
+      - shellcheck/check
+      - orb-tools/publish:
+          orb-name: rhems-japan/twingate
+          vcs-type: << pipeline.project.type >>
+          requires:
+            - orb-tools/lint
+            - orb-tools/pack
+            - orb-tools/review
+            - shellcheck/check
+          context: orb-publishing
+      - integration-test:
+          requires:
+            - orb-tools/publish

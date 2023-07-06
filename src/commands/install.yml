@@ -1,0 +1,6 @@
+description: >
+  Twingate Install
+steps:
+  - run:
+      name: Twingate Install
+      command: <<include(scripts/install.sh)>>

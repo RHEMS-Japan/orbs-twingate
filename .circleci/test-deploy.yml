@@ -1,0 +1,43 @@
+version: 2.1
+orbs:
+  orb-tools: circleci/orb-tools@12.0
+  twingate: rhems-japan/twingate@dev:<<pipeline.git.revision>>
+
+executors:
+  cimg-base:
+    docker:
+      - image: cimg/base:2023.07-20.04
+
+filters: &filters
+  tags:
+    only: /.*/
+
+release-filters: &release-filters
+  branches:
+    ignore: /.*/
+  tags:
+    only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+
+jobs:
+  command-test:
+    executor: cimg_base
+    steps:
+      - checkout
+      # Run your orb's commands to validate them.
+      - <orb-name>/greet
+workflows:
+  test-deploy:
+    jobs:
+      - command-test:
+          filters: *filters
+      - orb-tools/pack:
+          filters: *release-filters
+      - orb-tools/publish:
+          orb_name: rhems-japan/twingate
+          vcs_type: << pipeline.project.type >>
+          pub_type: production
+          requires:
+            - orb-tools/pack
+            - command-test
+          context: orb-publishing
+          filters: *release-filters
