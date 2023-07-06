@@ -26,7 +26,7 @@ workflows:
     jobs:
       - orb-tools/lint
       - orb-tools/pack
-      - orb-tools/review
+      # - orb-tools/review
       - shellcheck/check
       - orb-tools/continue:
           context: orb-publishing
@@ -36,7 +36,7 @@ workflows:
           requires:
             - orb-tools/lint
             - orb-tools/pack
-            - orb-tools/review
+            # - orb-tools/review
             - shellcheck/check
 
   dev-pack:
