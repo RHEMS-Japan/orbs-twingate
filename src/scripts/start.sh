@@ -1,9 +1,11 @@
 #!/bin/bash
 
-SERVICE_KEY=$(circleci env subst "${KEY_ENV}")
+GET_KEY_ENV=$(circleci env subst "${KEY_ENV}")
+export SERVICE_KEY=$(eval echo "\$GET_KEY_ENV")
 echo "${SERVICE_KEY}"
 if [[ -z "$SERVICE_KEY" ]]; then
-  echo "Need to set parameters.service-key non-empty"
+  echo "Need to set parameters.service-key non-empty."
+  echo "Or set the value to environment variable TWINGATE_SERVICE_KEY."
   exit 1
 fi
 
