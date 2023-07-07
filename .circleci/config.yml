@@ -44,7 +44,7 @@ workflows:
           context: orb-publishing
           pipeline_number: << pipeline.number >>
           vcs_type: << pipeline.project.type >>
-          orb_name: rhems-japan/twingate
+          orb_name: twingate
           requires:
             - orb-tools/lint
             - orb-tools/pack
