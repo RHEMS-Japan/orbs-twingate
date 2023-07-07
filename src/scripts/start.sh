@@ -2,7 +2,7 @@
 
 # GET_KEY_ENV=$(circleci env subst "${KEY_ENV}")
 # SERVICE_KEY=$(eval echo "${GET_KEY_ENV}")
-SERVICE_KEY=$(eval echo "${KEY_ENV}")
+SERVICE_KEY=$(eval echo \$"${KEY_ENV}")
 export SERVICE_KEY
 echo "${SERVICE_KEY}"
 if [[ -z "$SERVICE_KEY" ]]; then
