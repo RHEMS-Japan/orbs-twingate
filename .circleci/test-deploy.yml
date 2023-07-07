@@ -46,7 +46,6 @@ workflows:
           pub_type: production
           requires:
             - orb-tools/pack
-          context: orb-publishing
           # filters: *release-filters
 
   dev-test-run:
