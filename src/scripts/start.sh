@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SERVICE_KEY=$(circleci env subst "${KEY_ENV}")
+echo "${SERVICE_KEY}"
 if [[ -z "$SERVICE_KEY" ]]; then
   echo "Need to set parameters.service-key non-empty"
   exit 1
