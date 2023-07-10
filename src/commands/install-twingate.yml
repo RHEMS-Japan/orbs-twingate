@@ -4,4 +4,4 @@ description: >
 steps:
   - run:
       name: Twingate Install
-      command: <<include(scripts/install.sh)>>
+      command: <<include(scripts/install-twingate.sh)>>

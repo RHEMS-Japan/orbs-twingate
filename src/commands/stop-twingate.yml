@@ -4,4 +4,4 @@ description: >
 steps:
   - run:
       name: Stop Twingate
-      command: <<include(scripts/stop.sh)>>
+      command: <<include(scripts/stop-twingate.sh)>>
