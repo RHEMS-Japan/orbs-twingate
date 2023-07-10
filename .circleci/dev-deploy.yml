@@ -1,0 +1,26 @@
+version: 2.1
+orbs:
+  orb-tools: circleci/orb-tools@12.0
+  twingate: rhems-japan/twingate@dev:<<pipeline.git.revision>>
+
+executors:
+  default:
+    machine:
+      image: ubuntu-2004:2023.04.2
+
+jobs:
+  integration-test:
+    executor: default
+    steps:
+      - checkout
+      - twingate/install
+      - twingate/start
+      - twingate/stop
+
+workflows:
+  dev-deploy:
+    when:
+      and:
+        - equal: [<< pipeline.git.branch >>, "dev"]
+    jobs:
+      - integration-test
