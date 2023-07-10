@@ -13,9 +13,9 @@ jobs:
     executor: default
     steps:
       - checkout
-      - twingate/twingate-install
-      - twingate/twingate-start
-      - twingate/twingate-stop
+      - twingate/install-twingate
+      - twingate/start-twingate
+      - twingate/stop-twingate
 
 workflows:
   dev-deploy:
@@ -24,3 +24,12 @@ workflows:
         - equal: [<< pipeline.git.branch >>, "dev"]
     jobs:
       - integration-test
+      - orb-tools/pack:
+          requires:
+            - integration-test
+      - orb-tools/publish:
+          context: orb-publishing
+          orb_name: rhems-japan/twingate
+          vcs_type: << pipeline.project.type >>
+          requires:
+            - orb-tools/pack
