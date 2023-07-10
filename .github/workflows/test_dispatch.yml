@@ -3,7 +3,7 @@ name: Post to orbs-package
 on:
   push:
     tags:
-      - "^test[0-9]+.[0-9]+.[0-9]+$"
+      - "^test[0-9]+\.[0-9]+\.[0-9]+$"
 
 jobs:
   post:
