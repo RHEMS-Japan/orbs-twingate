@@ -61,8 +61,8 @@ workflows:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: $CLUSTER_NAME
           aws-region: $AWS_DEFAULT_REGION
-      - twingate/install
-      - twingate/start
+      - twingate/install-twingate
+      - twingate/start-twingate
       - run:
           name: apply
           working_directory: .circleci/kubernetes
@@ -71,5 +71,5 @@ workflows:
               cd overlays/develop
               kubectl apply -f .
             )
-      - twingate/stop
+      - twingate/stop-twingate
 ```
