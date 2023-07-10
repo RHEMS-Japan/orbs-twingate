@@ -61,7 +61,7 @@ workflows:
   dev-pack-on-tag:
     when:
       and:
-        - equal: [<< pipeline.git.branch >>, "dev"]
+        # - equal: [<< pipeline.git.branch >>, "dev"]
         - << pipeline.git.tag >>
     jobs:
       - echo-tag
