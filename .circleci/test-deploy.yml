@@ -8,17 +8,11 @@ executors:
     machine:
       image: ubuntu-2004:2023.04.2
 
-parameters:
-  release-filter:
-    description: exp v0.0.1
-    type: string
-    default: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-
-# release-filters: &release-filters
-#   branches:
-#     ignore: /.*/
-#   tags:
-#     only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+release-filters: &release-filters
+  branches:
+    ignore: /.*/
+  tags:
+    only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
 jobs:
   integration-test:
@@ -31,14 +25,9 @@ jobs:
 
 workflows:
   production-deploy:
-    when:
-      and:
-        - equal: [ << pipeline.git.tag >>, << pipeline.parameters.release-filter >> ]
     jobs:
-      # - integration-test:
-      #     filters: *filters
       - orb-tools/pack
-          # filters: *release-filters
+          filters: *release-filters
       - orb-tools/publish:
           context: orb-publishing
           orb_name: rhems-japan/twingate
@@ -46,7 +35,7 @@ workflows:
           pub_type: production
           requires:
             - orb-tools/pack
-          # filters: *release-filters
+          filters: *release-filters
 
   dev-test-run:
     when:
