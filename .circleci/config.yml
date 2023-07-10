@@ -21,7 +21,7 @@ release-filters: &release-filters
 
 dev-filters: &dev-filters
   branches:
-    only: /.*/
+    ignore: /.*/
   tags:
     only: /.*/
 
