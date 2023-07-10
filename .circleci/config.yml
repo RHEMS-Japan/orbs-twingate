@@ -4,15 +4,6 @@ orbs:
   orb-tools: circleci/orb-tools@12.0
   shellcheck: circleci/shellcheck@3.1
 
-jobs:
-  echo-tag:
-    machine:
-      image: ubuntu-2004:2023.04.2
-    steps:
-      - run:
-          name: echo branch & tag
-          command: echo "branch=<< pipeline.git.branch >>, tag=<< pipeline.git.tag >>."
-
 release-filters: &release-filters
   branches:
     ignore: /.*/
