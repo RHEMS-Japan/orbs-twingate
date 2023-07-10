@@ -1,27 +1,12 @@
 version: 2.1
 orbs:
   orb-tools: circleci/orb-tools@12.0
-  twingate: rhems-japan/twingate@dev:<<pipeline.git.revision>>
-
-executors:
-  default:
-    machine:
-      image: ubuntu-2004:2023.04.2
 
 release-filters: &release-filters
   branches:
     ignore: /.*/
   tags:
     only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-
-jobs:
-  integration-test:
-    executor: default
-    steps:
-      - checkout
-      - twingate/install
-      - twingate/start
-      - twingate/stop
 
 workflows:
   production-deploy:
@@ -36,10 +21,3 @@ workflows:
           requires:
             - orb-tools/pack
           filters: *release-filters
-
-  dev-test-run:
-    when:
-      and:
-        - equal: [ << pipeline.git.branch >>, "dev" ]
-    jobs:
-      - integration-test
