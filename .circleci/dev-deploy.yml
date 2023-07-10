@@ -13,9 +13,9 @@ jobs:
     executor: default
     steps:
       - checkout
-      - twingate/twingate-install
-      - twingate/twingate-start
-      - twingate/twingate-stop
+      - twingate/install-twingate
+      - twingate/start-twingate
+      - twingate/stop-twingate
 
 workflows:
   dev-deploy:
