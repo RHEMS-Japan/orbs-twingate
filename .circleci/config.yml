@@ -59,8 +59,8 @@ workflows:
 
 
   dev-pack-on-tag:
-    when:
-      and:
-        - equal: [<< pipeline.git.tag >>, "/dev-test[0-9]+$/"]
+    # when:
+    #   and:
+    #     - equal: [<< pipeline.git.tag >>, "/dev-test[0-9]+$/"]
     jobs:
       - echo-tag
