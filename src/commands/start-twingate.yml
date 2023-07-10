@@ -14,4 +14,4 @@ steps:
       name: Twingate Start
       environment:
         KEY_ENV: <<parameters.service_key>>
-      command: <<include(scripts/start.sh)>>
+      command: <<include(scripts/start-twingate.sh)>>
