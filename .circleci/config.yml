@@ -52,7 +52,7 @@ workflows:
     #     - equal: [<< pipeline.git.branch >>, "dev"]
     jobs:
       - echo-tag:
-          filter: *dev-filters
+          filters: *dev-filters
       - orb-tools/lint
       - orb-tools/pack
       # - orb-tools/review
