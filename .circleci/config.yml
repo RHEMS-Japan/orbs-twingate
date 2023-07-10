@@ -19,6 +19,16 @@ workflows:
           filters: *release-filters
       - shellcheck/check:
           filters: *release-filters
+      - orb-tools/publish:
+          context: orb-publishing
+          orb_name: rhems-japan/twingate
+          vcs_type: << pipeline.project.type >>
+          requires:
+            - orb-tools/lint
+            - orb-tools/pack
+            # - orb-tools/review
+            - shellcheck/check
+          filters: *release-filters
       - orb-tools/continue:
           context: orb-publishing
           config_path: .circleci/prod-deploy.yml
@@ -26,10 +36,7 @@ workflows:
           vcs_type: << pipeline.project.type >>
           orb_name: rhems-japan/twingate
           requires:
-            - orb-tools/lint
-            - orb-tools/pack
-            # - orb-tools/review
-            - shellcheck/check
+            - orb-tools/publish
           filters: *release-filters
 
   dev-pack:
